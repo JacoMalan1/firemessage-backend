@@ -1,0 +1,21 @@
+{
+  "name": "firemessage",
+  "version": "0.0.1",
+  "description": "Backend API for FireMessage chat application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "encrypted",
+    "messenger"
+  ],
+  "author": "Jaco Malan",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "mysql": "^2.17.1"
+  }
+}
