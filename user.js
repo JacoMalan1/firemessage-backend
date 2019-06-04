@@ -4,6 +4,11 @@ const fs = require('fs');
 
 class User {
 
+    /**
+     * Constructs a new User object.
+     * @param {string} uname 
+     * @param {Object} dbCreds
+     */
     constructor(uname, dbCreds) {
 
         this.name = uname;
@@ -14,6 +19,10 @@ class User {
 
     }
 
+    /**
+     * Gets the properties of the user and stores them
+     * in the current User object.
+     */
     async getProps() {
 
         const sql = new Sql(this.dbCreds);
@@ -25,6 +34,9 @@ class User {
 
     }
 
+    /**
+     * Saves the user to the database.
+     */
     async save() {
 
         const sql = new Sql(this.dbCreds);
@@ -53,6 +65,12 @@ class User {
 
     }
 
+    /**
+     * Computes and returns the hash for the
+     * given password.
+     * @param {string} pass 
+     * @returns {string}
+     */
     computeHash(pass) {
         return pass;
     }
