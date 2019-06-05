@@ -20,18 +20,32 @@ app.use(express.json());
 
 app.post('/login', (req, res) => {
 
-    res.format({
-        'application/json': () => res.send(req.body).status(200)
-    }).end();
+    const params = req.body;
+
+    if (!params.uname || !params.pword) {
+
+        res.json({ status: "error", error: "Invalid username or password." }).end();
+        return;
+
+    } else {
+
+        const user = new User(params.uname, sqlCreds);
+        user.getProps()
+            .then(() => {
+                if (user.hash === user.computeHash(params.pword)) {
+                    res.json({ status: "success", token: "access" }).end();
+                } else {
+                    res.json({ status: "error", error: "Passwords didn't match." });
+                }
+            })        
+            .catch(() => {
+                res.json({ status: "error", error: "Unknown error." }).end();
+                return;
+            });
+
+    }
 
 });
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-
-const user = new User("'jaco", sqlCreds);
-user.hash = 'jacotest';
-
-user.save()
-    .then(() => console.log("Success"))
-    .catch(err => console.error(err));
