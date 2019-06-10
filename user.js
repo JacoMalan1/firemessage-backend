@@ -6,8 +6,8 @@ class User {
 
     /**
      * Constructs a new User object.
-     * @param {string} uname 
-     * @param {Object} dbCreds
+     * @param {string} uname Username
+     * @param {Object} dbCreds Object containing the SQL credentials
      */
     constructor(uname, dbCreds) {
 
@@ -16,6 +16,7 @@ class User {
         this.dbCreds = dbCreds;
         this.type = null;
         this.id = -1;
+        this.gotProps = false;
 
     }
 
@@ -29,8 +30,55 @@ class User {
         await sql.connect();
 
         const query = await sql.query('SELECT * FROM fmdb.tblUsers WHERE uName = ' + mysql.escape(this.name));
+
+        if (query.results.length != 1) {
+            return;
+        }
+
         this.hash = query.results[0].uHash;
         this.id = query.results[0].uID;
+        this.getProps = true;
+
+    }
+
+    /**
+     * Authenticates the user and returns an
+     * object with the auth status.
+     */
+    async authenticate(creds) {
+
+        const auth = { logged: false, status: 'error', error: '', token: null };
+
+        if (!this.getProps) {
+            auth.error = 'You have to run getProps() first.';
+            return auth;
+        }
+
+        if (creds.uname != this.name) {
+            auth.error = 'Wrong user object.';
+            return auth;
+        }
+
+        const sql = new Sql(this.dbCreds);
+        await sql.connect();
+
+        const query = await sql.query('SELECT * FROM fmdb.tblUsers WHERE uName = ' + mysql.escape(this.name));
+
+        if (query.results.length != 1) {
+            auth.error = 'No such user.';
+            return auth;
+        }
+
+        const tHash = this.computeHash(creds.pword);
+        if (tHash = this.hash) {
+            auth.logged = true;
+            auth.status = 'success';
+            auth.token = 'Generic token';
+        } else {
+            auth.error = 'Wrong password.';
+        }
+
+        return auth;
 
     }
 
@@ -68,8 +116,8 @@ class User {
     /**
      * Computes and returns the hash for the
      * given password.
-     * @param {string} pass 
-     * @returns {string}
+     * @param {string} pass String to hash
+     * @returns {string} Returns a hex string
      */
     computeHash(pass) {
         return pass;

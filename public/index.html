@@ -1,32 +1,36 @@
+<!DOCTYPE html>
 <html>
+
+	<head>
+
+		<link rel="stylesheet" href="css/style.css">
+		<title>FireMessage | Home</title>
+
+	</head>
+
+	<header>
+
+		<p>FireMessage</p>
+
+	</header>
+
+	<nav>
+
+		<a href="login.html">Login</a>
+		<a href="register.html">Register</a>
+
+	</nav>
 
 	<body>
 
-		<h1>FireMessage</h1>
-		<p>Hello World</p>
-		<input value="test" type='button' id='btn1' onclick='testLogin()'>
-
-		<script>
-
-			async function tLogin() {
-
-				return await fetch('http://localhost:8080/login', {
-					method: 'POST',
-					headers: new Headers({
-						'Content-Type': 'application/json',
-						'Accept': 'application/json'
-					}),
-					body: JSON.stringify({ id: 'hug', password: 'kiss' }),
-				});
-
-			}
-
-			function testLogin() {
-				tLogin().then(res => res.text()).then(t => document.write(t));
-			}
-
-		</script>
+		<div class="container">
+			<h1>FireMessage</h1>
+			<p>Hello World</p>
+		</div>
 
 	</body>
+
+	<footer>
+	</footer>
 
 </html>

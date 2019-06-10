@@ -25,22 +25,21 @@ app.post('/login', (req, res) => {
     if (!params.uname || !params.pword) {
 
         res.json({ status: "error", error: "Invalid username or password." }).end();
-        return;
 
     } else {
 
         const user = new User(params.uname, sqlCreds);
-        user.getProps()
-            .then(() => {
-                if (user.hash === user.computeHash(params.pword)) {
-                    res.json({ status: "success", token: "access" }).end();
+        user.getProps();
+
+        user.authenticate(params)
+            .then(result => {
+
+                if (result.logged === false && result.status === 'error') {
+                    res.json({ status: 'error', error: result.error });
                 } else {
-                    res.json({ status: "error", error: "Passwords didn't match." });
+                    res.json({ status: 'success', token: result.token });
                 }
-            })        
-            .catch(() => {
-                res.json({ status: "error", error: "Unknown error." }).end();
-                return;
+
             });
 
     }
