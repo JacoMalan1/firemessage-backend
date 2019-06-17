@@ -1,77 +1,107 @@
 * {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-header {
-    background-color: #1f51af;
-    border-radius: 8px;
-    padding: 10px;;
-    font-size: 36px;
-    margin-bottom: 5px;
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
 }
 
 body {
-    text-align: center;
-    background-color: #191716;
-    color: #e0e2db;
-    border-radius: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-nav {
-    text-align: center;
-    border-radius: 8px;
-    background-color: #8349ff;
-    padding: 20px;
-    list-style-type: none;
+body .login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: #eee;
+  width: 75vw;
+  height: 65vh;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 3fr 5fr;
+      grid-template-columns: 3fr 5fr;
+  border-radius: 1.5rem;
 }
 
-nav a {
-
-    font-size: 21;
-    border-radius: 4px;
-    padding: 4px 8px;
-    background-color: #05a8aa;
-    text-decoration: none;
-    color: #e0e2db;
-
+body .login .left {
+  position: relative;
 }
 
-.container {
-
-    border-radius: 10px;
-    background-color: #ff9d00;
-    padding: 20px;
-    margin-top: 5px;
-    display: inline-block;
-    width: 98%;
-    
-
+body .login .left h1 {
+  font-size: 3rem;
+  text-align: center;
+  margin: 2rem 0;
 }
 
-.container input[type="text"], input[type="password"] {
-
-    background-color: #05a8aa;
-    margin: 4px;
-    padding: 4px;
-    border-radius: 8px;
-    border: 2px solid;
-    border-color: #e0e2db;
-    text-align: center;
-    outline: none;
-    box-shadow: none;
-
+body .login .left form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 70%;
 }
 
-.container input[type="submit"] {
-
-    background-color: #e0e2db;
-    margin: 4px;
-    padding: 8px;
-    border-radius: 8px;
-    border: 2px solid;
-    border-color: #e0e2db;
-    text-align: center;
-    outline: none;
-    box-shadow: none;
-
+body .login .left form label {
+  font-size: 1.4rem;
 }
+
+body .login .left form input {
+  width: 100%;
+  padding: 1rem 1.6rem;
+  margin-top: .5rem;
+  font-size: 1.6rem;
+  text-align: center;
+  border: none;
+  border-radius: 1rem;
+}
+
+body .login .left form input:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+body .login .left form input[type=submit] {
+  margin-top: 1.5rem;
+  background-image: -webkit-gradient(linear, left top, right top, from(#2289d4), to(#7932d6));
+  background-image: linear-gradient(to right, #2289d4, #7932d6);
+  color: #fff;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+body .login .right {
+  background-image: -webkit-gradient(linear, left top, right top, from(#2289d4), to(#7932d6));
+  background-image: linear-gradient(to right, #2289d4, #7932d6);
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+  color: #fff;
+  position: relative;
+}
+
+body .login .right .text {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+body .login .right .text h1 {
+  font-size: 6rem;
+}
+
+body .login .right .text p {
+  font-size: 2rem;
+}
+/*# sourceMappingURL=style.css.map */
