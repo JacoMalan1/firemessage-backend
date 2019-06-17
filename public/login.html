@@ -1,53 +1,35 @@
 <!DOCTYPE html>
-<html>
-
-    <head>
-        <link rel="stylesheet" href="css/style.css">
-        <title>FireMessage | Login</title>
-    </head>
-
-    <header>
-        <p>Login</p>
-    </header>
-
-    <nav>
-
-        <a href="index.html">Home</a>
-        <a href="register.html">Register</a>
-
-    </nav>
-
-    <body>
-
-        <script>
-
-            function login() {
-
-                const uname = document.getElementById('uname').value;
-                const pword = document.getElementById('pword').value;
-
-                const send = { uname, pword };
-                console.log(send);
-
-                fetch('http://localhost:8080/login', {
-                    method: 'POST',
-                    headers: new Headers({ 'Content-Type': 'application/json' }),
-                    body: JSON.stringify(send)
-                }).then(res => res.json()).then(content => console.log(content)).catch(err => console.log(err));
-                console.log("fetch");
-
-            }
-
-        </script>
-
-        <div class="container">
-
-            <input id="uname" type="text" placeholder="Username"><br>
-            <input id="pword" type="password" placeholder="Password"><br>
-            <input type="submit" value="Login" onclick="login()">
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FireMessage | Login</title>
+    <!-- VENDORS -->
+    <script src="https://unpkg.com/ionicons@4.5.9-1/dist/ionicons.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- JS -->
+    <script src="js/login.js"></script>
+</head>
+<body>
+    <section class="login">
+        <div class="left">
+            <h1><ion-icon name="person-add"></ion-icon> Sign Up</h1>
+            <form>
+                <label for="uname">Username</label>
+                <input id="uname" type="text" placeholder="Username"><br>
+                <label for="pword">Password</label>
+                <input id="pword" type="password" placeholder="Password"><br>
+                <input type="submit" value="Login" onclick="login()">
+            </form>
         </div>
-
-    </body>
-
+        <div class="right">
+            <div class="text">
+                <h1>Firemessage</h1>
+                <p>The best or nothing!</p>
+            </div>
+        </div>
+    </section>
+</body>
 </html>
