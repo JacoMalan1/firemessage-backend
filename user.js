@@ -1,6 +1,11 @@
+// Imports
 const mysql = require('mysql');
+const bcrypt = require('bcrypt');
 const Sql = require('./sql.js');
 const fs = require('fs');
+
+// Global variables
+const saltrounds = 10;
 
 class User {
 
@@ -32,12 +37,13 @@ class User {
         const query = await sql.query('SELECT * FROM fmdb.tblUsers WHERE uName = ' + mysql.escape(this.name));
 
         if (query.results.length != 1) {
+            throw new Error("No such user exists.");
             return;
         }
 
         this.hash = query.results[0].uHash;
         this.id = query.results[0].uID;
-        this.getProps = true;
+        this.gotProps = true;
 
     }
 
@@ -69,14 +75,18 @@ class User {
             return auth;
         }
 
-        const tHash = this.computeHash(creds.pword);
-        if (tHash = this.hash) {
-            auth.logged = true;
-            auth.status = 'success';
-            auth.token = 'Generic token';
-        } else {
-            auth.error = 'Wrong password.';
-        }
+        bcrypt.compare(creds.pword, this.hash).then(res => {
+
+            if (result) {
+                auth.status = 'success';
+                auth.token = 'generic';
+                auth.logged = true;
+            } else {
+                auth.status = 'error';
+                auth.error = 'Wrong password.';
+            }
+
+        });
 
         return auth;
 
@@ -90,9 +100,11 @@ class User {
         const sql = new Sql(this.dbCreds);
         await sql.connect();
 
-        let query = await sql.query('SELECT uID FROM fmdb.tblUsers WHERE uName = ' + mysql.escape(this.name));
+        const query = await sql.query('SELECT uID FROM fmdb.tblUsers WHERE uName = ' + mysql.escape(this.name));
         if (query.results.length > 0 && query.results.uID == this.id) {
+
             throw new Error("This user already exists.");
+
         } else if (query.results.length == 1 && query.results.uName == this.name) {
 
             const eHash = mysql.escape(this.hash);
@@ -117,10 +129,19 @@ class User {
      * Computes and returns the hash for the
      * given password.
      * @param {string} pass String to hash
+     * @param {boolean} reg Whether or not to save the hash to the user object.
      * @returns {string} Returns a hex string
      */
-    computeHash(pass) {
-        return pass;
+    async computeHash(pass, reg) {
+
+        let hash = await bcrypt.hash(pass, saltrounds);
+        
+        if (reg === true) {
+            this.hash = hash;
+        }
+
+        return hash;        
+
     }
 
 }
